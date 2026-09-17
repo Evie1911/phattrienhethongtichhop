@@ -1,0 +1,26 @@
+HostInspector
+Hợp lệ cục bộ localhost: IPv4 127.0.0.1, IPv6 0:0:0:0:0:0:0:1
+2. Hợp lệ bên ngoài example.com: IPv4 104.20.23.154, IPv6 172.66.147.243
+3. Không tồn tại host-khong-ton-tai.invalid: Nhận thông báo "Khong phan giai duoc hót"
+4. Thiếu args Không truyền tham số: Nhận thông báo "Usage: java network.HostInspecto <hostname>"
+
+TcpCommandServer/TcpCommandClient
+1. Terminal 1: biên dịch hai lớp, sau đó chạy tcp.TcpCommandServer.-> Chạy thành công
+2. Terminal 2: chạy tcp.TcpCommandClient localhost 5000. -> Chạy thành công
+3. Lần lượt gửi PING, UPPER xin chào, TIME, ABC và QUIT. -> Phản hồi thành công
+4. Chạy hai client cùng lúc và ghi nhận hạn chế của server phục vụ tuần tự. -> Server chỉ chạy 1 client
+5. Gửi lệnh sai -> Nhận phản hồi ERR UNKNOWN_COMMAND
+6. Đóng Client -> Server vẫn chạy
+
+MulticlientTcpServer
+1. Dừng TcpCommandServer rồi chạy MultiClientTcpServer. -> Chạy thành công
+2. Mở ba Terminal client và kết nối tới cùng cổng 5000. -> Nhận 3 cổng từ 3 client
+3. Tại mỗi client gửi ít nhất ba lệnh, giữ các phiên cùng hoạt động. -> Hoạt động bình thường
+4. Đóng đột ngột một client và xác nhận hai client còn lại không bị ảnh hưởng. -> 2 Client vẫn hoạt động bình thường, Server ghi nhận đã mất kết nối từ cổng Client vừa đóng
+
+UdpEchoServer/UdpEchoClient
+Tiếng Việt Gửi xin chào UDP: Nhận ACK XIN CHAO UDP
+Server chưa chạy Chạy client trước: Client nhận thông báo timeout
+Sai port Client gửi tới 5999: Client nhận thông báo timeout
+Nhiều client Chạy ba client gần đồng thời: 3 Client hoạt động bình thường
+Thông điệp dài Gửi dữ liệu gần 4096 byte: Server chỉ gửi 1 phần dữ liệu đã nhận
